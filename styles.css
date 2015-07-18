@@ -106,3 +106,13 @@ form {
 #templates {
   display: none
 }
+
+a.swap {
+  background: url('http://iconsineed.com/Downloads.aspx?i=54&n=sync-128.png') center no-repeat;
+  background-size: 100%;
+  display: block;
+  height: 50px;
+  width: 50px;
+  margin: 20px auto;
+  cursor: pointer;
+}

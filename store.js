@@ -10,18 +10,21 @@ var findItemById = function( id ) {
   })[0]
 };
 
-var URL_ROOT = "https://listalous.herokuapp.com/lists/ANTHOULA/";
-
 ListStore = {
+  listName: 'ANTHOULA',
+
+  urlRoot: function() {
+    return "https://listalous.herokuapp.com/lists/" + this.listName;
+  },
 
   getItems: function() {
-    return items
+    return items;
   },
 
   loadItems: function() {
     var loadRequest = $.ajax({
       type : "GET",
-      url  : URL_ROOT
+      url  : this.urlRoot()
     });
 
     loadRequest.done( function( dataFromServer ) {
@@ -33,7 +36,7 @@ ListStore = {
   addItem: function( itemDescription ) {
     var creationRequest = $.ajax({
       type : 'POST',
-      url  : URL_ROOT + "/items",
+      url  : this.urlRoot() + "/items",
       data : { description: itemDescription, completed: false }
     });
 
@@ -49,7 +52,7 @@ ListStore = {
 
     var updateRequest = $.ajax({
       type : 'PUT',
-      url  : URL_ROOT + "/items/" + itemId,
+      url  : this.urlRoot() + "/items/" + itemId,
       data : { completed: !currentCompletedValue }
     });
 
@@ -63,7 +66,7 @@ ListStore = {
     var item          = findItemById( itemId ),
         deleteRequest = $.ajax({
           type : 'DELETE',
-          url  : URL_ROOT + "/items/" + itemId
+          url  : this.urlRoot() + "/items/" + itemId
         });
 
     deleteRequest.done( function( itemDataFromServer ) {
