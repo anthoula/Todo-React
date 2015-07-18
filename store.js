@@ -8,7 +8,9 @@ var findItemById = function( id ) {
   return items.filter(function(item) {
     return item.id === id
   })[0]
-},
+};
+
+var URL_ROOT = "https://listalous.herokuapp.com/lists/ANTHOULA/";
 
 ListStore = {
 
@@ -16,10 +18,10 @@ ListStore = {
     return items
   },
 
-  loadItems: function( listName ) {
+  loadItems: function() {
     var loadRequest = $.ajax({
       type : "GET",
-      url  : "https://listalous.herokuapp.com/lists/" + listName + "/"
+      url  : URL_ROOT
     });
 
     loadRequest.done( function( dataFromServer ) {
@@ -28,10 +30,10 @@ ListStore = {
     });
   },
 
-  addItem: function( itemDescription, listName ) {
+  addItem: function( itemDescription ) {
     var creationRequest = $.ajax({
       type : 'POST',
-      url  : "http://listalous.herokuapp.com/lists/" + listName + "/items",
+      url  : URL_ROOT + "/items",
       data : { description: itemDescription, completed: false }
     });
 
@@ -41,13 +43,13 @@ ListStore = {
     });
   },
 
-  toggleCompleteness: function( itemId, listName ) {
+  toggleCompleteness: function( itemId ) {
     var item                  = findItemById( itemId ),
         currentCompletedValue = item.completed;
 
     var updateRequest = $.ajax({
       type : 'PUT',
-      url  : "https://listalous.herokuapp.com/lists/" + listName + "/items/" + itemId,
+      url  : URL_ROOT + "/items/" + itemId,
       data : { completed: !currentCompletedValue }
     });
 
@@ -57,11 +59,11 @@ ListStore = {
     });
   },
 
-  deleteItem: function( itemId, listName ){
+  deleteItem: function( itemId ){
     var item          = findItemById( itemId ),
         deleteRequest = $.ajax({
           type : 'DELETE',
-          url  : "http://listalous.herokuapp.com/lists/" + listName + "/items/" + itemId
+          url  : URL_ROOT + "/items/" + itemId
         });
 
     deleteRequest.done( function( itemDataFromServer ) {
